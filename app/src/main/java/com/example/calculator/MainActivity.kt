@@ -1,0 +1,139 @@
+package com.example.calculator
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import com.example.calculator.databinding.ActivityMainBinding
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.equalTo.setOnClickListener { equalTo() }
+        binding.allClear.setOnClickListener { allClear() }
+        binding.backSpace.setOnClickListener { backSpace() }
+        binding.period.setOnClickListener { addToInputText(".") }
+        binding.plus.setOnClickListener { addToInputText("+") }
+        binding.multiply.setOnClickListener { addToInputText("*") }
+        binding.divide.setOnClickListener { addToInputText("/") }
+        binding.subtract.setOnClickListener { addToInputText("-") }
+        binding.number0.setOnClickListener { addToInputText("0") }
+        binding.number1.setOnClickListener { addToInputText("1") }
+        binding.number2.setOnClickListener { addToInputText("2") }
+        binding.number3.setOnClickListener { addToInputText("3") }
+        binding.number4.setOnClickListener { addToInputText("4") }
+        binding.number5.setOnClickListener { addToInputText("5") }
+        binding.number6.setOnClickListener { addToInputText("6") }
+        binding.number7.setOnClickListener { addToInputText("7") }
+        binding.number8.setOnClickListener { addToInputText("8") }
+        binding.number9.setOnClickListener { addToInputText("9") }
+    }
+
+    fun addToInputText(buttonValue: String) {
+        binding.workingTV.append(buttonValue)
+    }
+
+    fun equalTo() {
+        binding.resultsTV.text = calculateResults()
+    }
+
+    private fun calculateResults(): String {
+        var numbersOperator = numbersOperators()
+        if (numbersOperator.isEmpty()) return ""
+
+        val intoDivision = intoDivisionCalculate(numbersOperator)
+
+        val addSubtract = addSubtractCalculate(intoDivision)
+        return addSubtract.toString()
+    }
+
+    private fun addSubtractCalculate(intoDivision: MutableList<Any>): Float {
+        var result = intoDivision[0] as Float
+
+        for(i in intoDivision.indices){
+            if(intoDivision[i] is Char && i != intoDivision.lastIndex){
+                val operator = intoDivision[i]
+                val nextDigit = intoDivision[i+1] as Float
+
+                when(operator){
+                    '+' -> result += nextDigit
+
+                    '-' -> result -= nextDigit
+                }
+            }
+        }
+        return result
+    }
+
+    private fun intoDivisionCalculate(numbersOperator: MutableList<Any>): MutableList<Any> {
+        var numbersOperatorList = numbersOperator
+        var intoDivisionList = mutableListOf<Any>()
+        var restart = numbersOperatorList.size
+
+        while (numbersOperatorList.contains('*') || numbersOperatorList.contains('/')) {
+            for (i in numbersOperatorList.indices) {
+                if (numbersOperatorList[i] is Char && i != numbersOperatorList.lastIndex && i < restart) {
+                    val operator = numbersOperatorList[i]
+                    val prevdigit = numbersOperatorList[i - 1] as Float
+                    val nextDigit = numbersOperatorList[i + 1] as Float
+
+                    when (operator) {
+                        '*' -> {
+                            intoDivisionList.add(prevdigit * nextDigit)
+                            restart = i + 1
+                        }
+
+                        '/' -> {
+                            intoDivisionList.add(prevdigit / nextDigit)
+                            restart = i + 1
+                        }
+
+                        else -> {
+                            intoDivisionList.add(prevdigit)
+                            intoDivisionList.add(operator)
+                        }
+                    }
+                }
+                if(i > restart){
+                    intoDivisionList.add(numbersOperatorList[i])
+                }
+            }
+            numbersOperatorList = intoDivisionList
+        }
+        return numbersOperatorList
+    }
+
+    private fun numbersOperators(): MutableList<Any> {
+        var numbersOperatorsList = mutableListOf<Any>()
+        var currentDigit = ""
+
+        for (character in binding.workingTV.text.toString()) {
+            if (character.isDigit() || character == '.')
+                currentDigit += character
+            else {
+                numbersOperatorsList.add(currentDigit.toFloat())
+                currentDigit = ""
+                numbersOperatorsList.add(character)
+            }
+        }
+        if (currentDigit != "") numbersOperatorsList.add(currentDigit)
+        return numbersOperatorsList
+    }
+
+    fun allClear() {
+        binding.workingTV.text = ""
+        binding.resultsTV.text = ""
+    }
+
+    fun backSpace() {
+        var stringInWorkingTV = binding.workingTV.text
+        binding.workingTV.text = stringInWorkingTV.substring(0, stringInWorkingTV.length - 1)
+    }
+}
+
+
+
