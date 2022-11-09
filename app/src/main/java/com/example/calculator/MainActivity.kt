@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         if(containsDigit(numbersOperator) == false) return "Add numbers"
         val intoDivision = intoDivisionCalculate(numbersOperator)
         val addSubtract = addSubtractCalculate(intoDivision)
-        return addSubtract.toString()
+        return addSubtract.toString() // verhte
     }
 
     private fun addSubtractCalculate(intoDivision: MutableList<Any>): Float {
