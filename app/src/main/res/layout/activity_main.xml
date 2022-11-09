@@ -52,6 +52,7 @@
             android:id="@+id/allClear"
             style="@style/buttonNumber"
             android:text="ac"
+
             android:textColor="@color/red"
             />
 
@@ -59,6 +60,7 @@
             android:id="@+id/backSpace"
             style="@style/buttonNumber"
             android:text="\u232b"
+
             android:textColor="@color/red"
             />
 
@@ -68,9 +70,70 @@
             />
 
         <Button
+            android:id="@+id/divide"
+            style="@style/buttonOperator"
+            android:text="\u00f7"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/buttonRow"
+        >
+
+        <Button
+            android:id="@+id/number7"
+            style="@style/buttonNumber"
+            android:text="7"
+            />
+
+        <Button
+            android:id="@+id/number8"
+            style="@style/buttonNumber"
+            android:text="8"
+            />
+
+        <Button
+            android:id="@+id/number9"
+            style="@style/buttonNumber"
+            android:text="9"
+            />
+
+        <Button
             android:id="@+id/multiply"
             style="@style/buttonOperator"
             android:text="\u00D7"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/buttonRow"
+        >
+
+        <Button
+            android:id="@+id/number4"
+            style="@style/buttonNumber"
+            android:text="4"
+            />
+
+        <Button
+            android:id="@+id/number5"
+            style="@style/buttonNumber"
+            android:text="5"
+            />
+
+        <Button
+            android:id="@+id/number6"
+            style="@style/buttonNumber"
+            android:text="6"
+            />
+
+        <Button
+            android:id="@+id/subtract"
+            style="@style/buttonOperator"
+            android:textSize="50sp"
+            android:text="-"
             />
 
     </LinearLayout>
@@ -110,66 +173,6 @@
         >
 
         <Button
-            android:id="@+id/number4"
-            style="@style/buttonNumber"
-            android:text="4"
-            />
-
-        <Button
-            android:id="@+id/number5"
-            style="@style/buttonNumber"
-            android:text="5"
-            />
-
-        <Button
-            android:id="@+id/number6"
-            style="@style/buttonNumber"
-            android:text="6"
-            />
-
-        <Button
-            android:id="@+id/subtract"
-            style="@style/buttonOperator"
-            android:text="-"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/buttonRow"
-        >
-
-        <Button
-            android:id="@+id/number7"
-            style="@style/buttonNumber"
-            android:text="7"
-            />
-
-        <Button
-            android:id="@+id/number8"
-            style="@style/buttonNumber"
-            android:text="8"
-            />
-
-        <Button
-            android:id="@+id/number9"
-            style="@style/buttonNumber"
-            android:text="9"
-            />
-
-        <Button
-            android:id="@+id/divide"
-            style="@style/buttonOperator"
-            android:text="\u00f7"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/buttonRow"
-        >
-
-        <Button
             android:id="@+id/period"
             style="@style/buttonNumber"
             android:text="."
@@ -185,9 +188,9 @@
             android:id="@+id/equalTo"
             style="@style/buttonNumber"
             android:layout_weight="2"
-            android:background="@color/orange"
+            android:background="@color/green"
             android:text="="
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="40sp" />
 
 

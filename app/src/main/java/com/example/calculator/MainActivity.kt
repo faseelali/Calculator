@@ -3,6 +3,7 @@ package com.example.calculator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.example.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -45,8 +46,8 @@ class MainActivity : AppCompatActivity() {
         var numbersOperator = numbersOperators()
         if (numbersOperator.isEmpty()) return ""
 
+        if(containsDigit(numbersOperator) == false) return "Add numbers"
         val intoDivision = intoDivisionCalculate(numbersOperator)
-
         val addSubtract = addSubtractCalculate(intoDivision)
         return addSubtract.toString()
     }
@@ -54,12 +55,12 @@ class MainActivity : AppCompatActivity() {
     private fun addSubtractCalculate(intoDivision: MutableList<Any>): Float {
         var result = intoDivision[0] as Float
 
-        for(i in intoDivision.indices){
-            if(intoDivision[i] is Char && i != intoDivision.lastIndex){
+        for (i in intoDivision.indices) {
+            if (intoDivision[i] is Char && i != intoDivision.lastIndex) {
                 val operator = intoDivision[i]
-                val nextDigit = intoDivision[i+1] as Float
+                val nextDigit = intoDivision[i + 1].toString().toFloat()
 
-                when(operator){
+                when (operator) {
                     '+' -> result += nextDigit
 
                     '-' -> result -= nextDigit
@@ -72,14 +73,15 @@ class MainActivity : AppCompatActivity() {
     private fun intoDivisionCalculate(numbersOperator: MutableList<Any>): MutableList<Any> {
         var numbersOperatorList = numbersOperator
         var intoDivisionList = mutableListOf<Any>()
-        var restart = numbersOperatorList.size
 
         while (numbersOperatorList.contains('*') || numbersOperatorList.contains('/')) {
+            var restart = numbersOperatorList.size
+
             for (i in numbersOperatorList.indices) {
                 if (numbersOperatorList[i] is Char && i != numbersOperatorList.lastIndex && i < restart) {
                     val operator = numbersOperatorList[i]
-                    val prevdigit = numbersOperatorList[i - 1] as Float
-                    val nextDigit = numbersOperatorList[i + 1] as Float
+                    val prevdigit = numbersOperatorList[i - 1].toString().toFloat()
+                    val nextDigit = numbersOperatorList[i + 1].toString().toFloat()
 
                     when (operator) {
                         '*' -> {
@@ -98,11 +100,12 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-                if(i > restart){
+                if (i > restart) {
                     intoDivisionList.add(numbersOperatorList[i])
                 }
             }
-            numbersOperatorList = intoDivisionList
+            numbersOperatorList = intoDivisionList.toMutableList()
+            intoDivisionList.clear()
         }
         return numbersOperatorList
     }
@@ -121,6 +124,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         if (currentDigit != "") numbersOperatorsList.add(currentDigit)
+        if(numbersOperatorsList.last() is Char)
+            numbersOperatorsList.removeAt(numbersOperatorsList.size - 1)
         return numbersOperatorsList
     }
 
@@ -131,9 +136,20 @@ class MainActivity : AppCompatActivity() {
 
     fun backSpace() {
         var stringInWorkingTV = binding.workingTV.text
-        binding.workingTV.text = stringInWorkingTV.substring(0, stringInWorkingTV.length - 1)
+
+        if (binding.workingTV.text.isNotBlank()) {
+            binding.workingTV.text = stringInWorkingTV.substring(0, stringInWorkingTV.length - 1)
+        }
     }
 }
 
+fun containsDigit(list: List<Any>): Boolean{
+    for(i in list){
+
+        if(i is Float)
+            return true
+    }
+    return false
+}
 
 
