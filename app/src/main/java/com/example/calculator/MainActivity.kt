@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
         binding.backSpace.setOnClickListener { backSpace() }
         binding.period.setOnClickListener { addToInputText(".") }
         binding.plus.setOnClickListener { addToInputText("+") }
-        binding.multiply.setOnClickListener { addToInputText("*") }
-        binding.divide.setOnClickListener { addToInputText("/") }
+        binding.multiply.setOnClickListener { addToInputText("\u00D7") }
+        binding.divide.setOnClickListener { addToInputText("\u00f7") }
         binding.subtract.setOnClickListener { addToInputText("-") }
         binding.number0.setOnClickListener { addToInputText("0") }
         binding.number1.setOnClickListener { addToInputText("1") }
@@ -35,7 +35,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addToInputText(buttonValue: String) {
-        binding.workingTV.append(buttonValue)
+        val presentOperator = buttonValue
+        val operators = listOf<String>("+", "-", "×", "÷")
+
+        //to check whether first thing enetered is an operator
+        if(binding.workingTV.text.isBlank() && operators.contains(presentOperator))
+            Toast.makeText(this, "Enter a Digit first", Toast.LENGTH_SHORT).show()
+
+        //to check whether 2 consecutive operators are entered
+        else if (operators.contains(presentOperator) && binding.workingTV.text.isNotBlank() && operators.contains(
+                binding.workingTV.text.last().toString()
+            )
+        )
+            Toast.makeText(this, "Enter a digit", Toast.LENGTH_SHORT).show()
+        else binding.workingTV.append(buttonValue)
     }
 
     fun equalTo() {
@@ -46,10 +59,9 @@ class MainActivity : AppCompatActivity() {
         var numbersOperator = numbersOperators()
         if (numbersOperator.isEmpty()) return ""
 
-        if(containsDigit(numbersOperator) == false) return "Add numbers"
         val intoDivision = intoDivisionCalculate(numbersOperator)
         val addSubtract = addSubtractCalculate(intoDivision)
-        return addSubtract.toString() // verhte
+        return addSubtract.toString()
     }
 
     private fun addSubtractCalculate(intoDivision: MutableList<Any>): Float {
@@ -74,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         var numbersOperatorList = numbersOperator
         var intoDivisionList = mutableListOf<Any>()
 
-        while (numbersOperatorList.contains('*') || numbersOperatorList.contains('/')) {
+        while (numbersOperatorList.contains('\u00D7') || numbersOperatorList.contains('\u00f7')) {
             var restart = numbersOperatorList.size
 
             for (i in numbersOperatorList.indices) {
@@ -84,12 +96,12 @@ class MainActivity : AppCompatActivity() {
                     val nextDigit = numbersOperatorList[i + 1].toString().toFloat()
 
                     when (operator) {
-                        '*' -> {
+                        '\u00D7' -> {
                             intoDivisionList.add(prevdigit * nextDigit)
                             restart = i + 1
                         }
 
-                        '/' -> {
+                        '\u00f7' -> {
                             intoDivisionList.add(prevdigit / nextDigit)
                             restart = i + 1
                         }
@@ -124,7 +136,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         if (currentDigit != "") numbersOperatorsList.add(currentDigit)
-        if(numbersOperatorsList.last() is Char)
+        if (numbersOperatorsList.last() is Char)
             numbersOperatorsList.removeAt(numbersOperatorsList.size - 1)
         return numbersOperatorsList
     }
@@ -143,13 +155,5 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-fun containsDigit(list: List<Any>): Boolean{
-    for(i in list){
-
-        if(i is Float)
-            return true
-    }
-    return false
-}
 
 
