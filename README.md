@@ -1,5 +1,5 @@
 # Calculator
-Simple Calculator app made using Kotlin
+This is a simple Calculator app made in Android Studio using Kotlin
 <br>
 <br>
 <img src="https://user-images.githubusercontent.com/84272386/201021347-6d9d70dd-693c-4cf2-8663-01341f9b9fed.jpg" width="200"> 
