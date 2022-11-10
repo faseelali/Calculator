@@ -9,6 +9,7 @@ import com.example.calculator.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
+    val operators = listOf<String>("+", "-", "×", "÷")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +37,6 @@ class MainActivity : AppCompatActivity() {
 
     fun addToInputText(buttonValue: String) {
         val presentOperator = buttonValue
-        val operators = listOf<String>("+", "-", "×", "÷")
 
         //to check whether first thing enetered is an operator
         if(binding.workingTV.text.isBlank() && operators.contains(presentOperator))
@@ -52,7 +52,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun equalTo() {
-        binding.resultsTV.text = calculateResults()
+        if(operators.any() {binding.workingTV.text.toString().contains(it)})
+            binding.resultsTV.text = calculateResults()
+        else
+            binding.resultsTV.text = binding.workingTV.text
     }
 
     private fun calculateResults(): String {
