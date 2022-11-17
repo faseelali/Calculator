@@ -9,7 +9,7 @@ import com.example.calculator.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
-    val operators = listOf<String>("+", "-", "×", "÷")
+    val operators = listOf<String>("+", "-", "×", "÷", ".")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

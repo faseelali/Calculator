@@ -67,6 +67,8 @@
         <Button
             style="@style/buttonNumber"
             android:text=""
+            app:strokeColor="@color/white"
+            app:strokeWidth="2dp"
             />
 
         <Button
